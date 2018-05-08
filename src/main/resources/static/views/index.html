@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/lib/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
+
+    <script src="../js/lib/jquery.js"></script>
+    <script src="../js/lib/angular.js"></script>
+    <script src="../js/lib/bootstrap.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/controller/todoController.js"></script>
+    <script src="../js/service/todoService.js"></script>
+</head>
+<body ng-app = "todo-app" ng-controller="addTaskCtrl">
+<div class="container">
+    <h4 class="text-center">TODO APP</h4>
+
+    <div class="alert alert-danger" ng-if = "errorMessage">
+        <button type="button" class="close" data-dismiss="alert" ng-click = "resetMessages()">&times;</button>
+        {{errorMessage}}
+    </div>
+    <div class="alert alert-success" ng-if = "successMessage">
+        <button type="button" class="close" data-dismiss="alert" ng-click = "resetMessages()">&times;</button>
+        {{successMessage}}
+    </div>
+    <div class = "row">
+        <div class="col-3"></div>
+        <div class="add-task-container col-6">
+            <input type="text"  ng-model = "taskId" style="display: none;">
+            <input type="text" class="form-control" ng-model = "taskName" placeholder="Task Description">
+            <input type="text" class="form-control field-custom-css" ng-model = "dueDate" placeholder="Due Date Format(dd-mm-yyyy)">
+            <input type="text" class="form-control field-custom-css" ng-model = "status" ng-if="isUpdate">
+            <a  ng-click = "addTask()" class="btn btn-success field-custom-css" ng-if="!isUpdate">Add Task</a>
+            <a  ng-click = "updateTask()" class="btn btn-primary field-custom-css" ng-if="isUpdate">Update Task</a>
+        </div>
+        <div class="col-3"></div>
+
+    </div>
+
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th>Task Name</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat = "task in tasks">
+            <td>
+                {{task.name}}
+            </td>
+            <td>
+                {{task.dueDate}}
+            </td>
+            <td>
+                {{task.status}}
+            </td>
+            <td>
+                <span><a class="btn btn-link" ng-click="updateTask(task)">DONE</a></span>|
+                <span><a class="btn btn-link" ng-click="allowUpdate(task)">UPDATE</a></span>|
+                <span><a class="btn btn-link" ng-click="deleteTask(task)">DELETE</a></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+
+</html>
